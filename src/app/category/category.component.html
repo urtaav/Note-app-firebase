@@ -1,0 +1,56 @@
+<div class="row justify-content-center md-3">
+    <div class="col-md-4 text-center">
+        <h2 class=" text-bold">CATEGORIES</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+            <div class="form-group">
+                <div class="controls">
+                    <div class="input-group">
+                        <input type="text" placeholder="Add New Categories here" name="categoryName"
+                            class="form-control  drop-shadow" [(ngModel)]="categoryName" required #category='ngModel'
+                            [ngClass]="{'border-danger': f.submitted && category.invalid}">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-info btn-todo">{{ dataStatus }}</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-danger" *ngIf="f.submitted && category.invalid && category.errors.required">
+                Category is Required...
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row categories-list">
+    <div class="col-md-3" *ngFor="let category of categories">
+        <div class="card drop-shadow" [style.border-left-color]='category.data.colorCode'>
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left">
+                        <div class="badge badge-primary">
+                            CATEGORY
+                        </div>
+                    </div>
+                    <div class="float-right cat-tools">
+                        <small> <i class="fa fa-pencil-alt text-success"
+                                (click)="onEdit(category.data.category, category.id)"></i></small>
+                        <small> <i class="fas fa-trash text-danger" (click)="onDelete(category.id)"></i></small>
+                    </div>
+                </div>
+                <div class="todo-content" [routerLink]="['/todo',category.id]">
+                    <h4 [style.color]="category.data.colorCode">{{category.data.category}}</h4>
+                    <small class="text-secondary">
+                        Lorem ipsum maxime ut recusandae minima error nobis distinctio. Blanditiis, maxime?
+                    </small>
+                </div>
+                <span class="badge badge-danger">
+                    {{category.data.todoCount}} -todo
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
